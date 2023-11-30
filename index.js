@@ -8,7 +8,6 @@ const mongoose = require("mongoose");
 // Basic Configuration
 const port = process.env.PORT || 3000;
 
-console.log("Hello111");
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
@@ -21,7 +20,6 @@ mongoose
     console.error(`Error connecting to the database. \n${err}`);
   });
 
-console.log("Helwewewewewewewewewewewewewewewewewew");
 const db = mongoose.connection;
 
 db.on("connected", () => {
@@ -54,25 +52,52 @@ const urlSchema = new mongoose.Schema({
 
 let Url = mongoose.model("Url", urlSchema);
 
-app.post("/api/shorturl", function (req, res) {
-  const mongoUrl = new Url({
-    original_url: req.body.url,
-    short_url: 1010,
-  });
-  mongoUrl
-    .save()
-    .then((result) => {
-      // done(null, result);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-  console.log(req.body.url);
-  const response = {
-    original_url: req.body.url,
-    short_url: 1010,
-  };
-  res.json(response);
+let counter = 1;
+
+app.post("/api/shorturl", async function (req, res) {
+  const url = req.body.url;
+
+  try {
+    const existingUrl = await Url.findOne({ original_url: url });
+
+    if (existingUrl) {
+      res.json({
+        original_url: existingUrl.original_url,
+        short_url: existingUrl.short_url,
+      });
+    } else {
+      const newUrl = new Url({ original_url: url, short_url: counter++ });
+      await newUrl.save();
+      res.json({
+        original_url: newUrl.original_url,
+        short_url: newUrl.short_url,
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "server error" });
+  }
+
+  // const mongoUrl = new Url({
+  //   original_url: url,
+  //   short_url: 1010,
+  // });
+  // mongoUrl
+  //   .save()
+  //   .then((result) => {
+  //     // done(null, result);
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //   });
+
+  // console.log(url);
+
+  // const response = {
+  //   original_url: url,
+  //   short_url: 1010,
+  // };
+  // res.json(response);
 });
 
 app.get("/api/shorturl/:shorturl", function (req, res) {
