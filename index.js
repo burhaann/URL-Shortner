@@ -50,15 +50,15 @@ const urlSchema = new mongoose.Schema({
 let Url = mongoose.model("Url", urlSchema);
 
 app.post("/api/shorturl", function (req, res) {
-  const response = new Url({
+  // const response = new Url({
+  //   original_url: req.body,
+  //   short_url: req.body,
+  // });
+  console.log("This is request body" + req.body);
+  const response = {
     original_url: req.body,
     short_url: req.body,
-  });
-  console.log("This is request body" + req.body);
-  // response = {
-  //   original_url: original_url,
-  //   short_url: original_url,
-  // };
+  };
   res.json(response);
 });
 
