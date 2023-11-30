@@ -59,7 +59,14 @@ app.post("/api/shorturl", function (req, res) {
     original_url: req.body.url,
     short_url: req.body,
   });
-  mongoUrl.save();
+  mongoUrl
+    .save()
+    .then((result) => {
+      done(null, result);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   console.log(req.body.url);
   const response = {
     original_url: req.body.url,
