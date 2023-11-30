@@ -4,6 +4,7 @@ const cors = require("cors");
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const validUrl = require("valid-url");
 
 // Basic Configuration
 const port = process.env.PORT || 3000;
@@ -56,6 +57,10 @@ let counter = 1;
 
 app.post("/api/shorturl", async function (req, res) {
   const url = req.body.url;
+  if (!validUrl.isWebUri(url)) {
+    return res.json({ error: "invalid url" });
+  }
+
   try {
     const existingUrl = await Url.findOne({ original_url: url });
 
