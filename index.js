@@ -12,7 +12,7 @@ console.log("Hello111");
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    app.listen(port, function () {
+    app.listen(process.env.PORT || 3000, function () {
       console.log(`Listening on port ${port}`);
     });
     console.log("Connected to database ");
