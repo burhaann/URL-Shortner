@@ -54,12 +54,12 @@ app.post("/api/shorturl", function (req, res) {
   //   original_url: req.body,
   //   short_url: req.body,
   // });
-  console.log(req.body);
-  // const response = {
-  //   original_url: req.body,
-  //   short_url: req.body,
-  // };
-  // res.json(response);
+  console.log(req.body.url);
+  const response = {
+    original_url: req.body.url,
+    short_url: 1010,
+  };
+  res.json(response);
 });
 
 app.get("/api/shorturl/:shorturl", function (req, res) {
