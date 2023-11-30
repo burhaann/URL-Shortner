@@ -11,6 +11,9 @@ const port = process.env.PORT || 3000;
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
+    app.listen(port, function () {
+      console.log(`Listening on port ${port}`);
+    });
     console.log("Connected to database ");
   })
   .catch((err) => {
@@ -50,10 +53,11 @@ const urlSchema = new mongoose.Schema({
 let Url = mongoose.model("Url", urlSchema);
 
 app.post("/api/shorturl", function (req, res) {
-  // const response = new Url({
-  //   original_url: req.body,
-  //   short_url: req.body,
-  // });
+  const mongoUrl = new Url({
+    original_url: req.body.url,
+    short_url: req.body,
+  });
+  mongoUrl.save();
   console.log(isUri(req.body.url));
   const response = {
     original_url: req.body.url,
@@ -66,6 +70,6 @@ app.get("/api/shorturl/:shorturl", function (req, res) {
   const short_url = req.params.shorturl;
 });
 
-app.listen(port, function () {
-  console.log(`Listening on port ${port}`);
-});
+// app.listen(port, function () {
+//   console.log(`Listening on port ${port}`);
+// });
