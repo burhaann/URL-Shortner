@@ -55,11 +55,11 @@ app.post("/api/shorturl", function (req, res) {
   //   short_url: req.body,
   // });
   console.log("This is request body" + req.body);
-  const response = {
-    original_url: req.body,
-    short_url: req.body,
-  };
-  res.json(response);
+  // const response = {
+  //   original_url: req.body,
+  //   short_url: req.body,
+  // };
+  // res.json(response);
 });
 
 app.get("/api/shorturl/:shorturl", function (req, res) {
