@@ -9,9 +9,7 @@ const mongoose = require("mongoose");
 const port = process.env.PORT || 3000;
 
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("Connected to database ");
   })
