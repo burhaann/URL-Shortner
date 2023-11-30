@@ -52,12 +52,6 @@ const urlSchema = new mongoose.Schema({
 
 let Url = mongoose.model("Url", urlSchema);
 
-Url.countDocuments({}, (err, count) => {
-  if (err) {
-    console.error(err);
-  } else {
-    console.log(`Number of documents: ${count}`);
-  }
 let counter = 1;
 
 app.post("/api/shorturl", async function (req, res) {
