@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 // Basic Configuration
 const port = process.env.PORT || 3000;
 
+console.log("Hello111");
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
@@ -20,6 +21,7 @@ mongoose
     console.error(`Error connecting to the database. \n${err}`);
   });
 
+console.log("Helwewewewewewewewewewewewewewewewewew");
 const db = mongoose.connection;
 
 db.on("connected", () => {
