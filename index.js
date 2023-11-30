@@ -49,12 +49,12 @@ const urlSchema = new mongoose.Schema({
 
 let Url = mongoose.model("Url", urlSchema);
 
-app.post("/api/shorturl", function (req, res) {
+app.get("/api/shorturl", function (req, res) {
   // const response = new Url({
   //   original_url: req.body,
   //   short_url: req.body,
   // });
-  console.log("This is request body" + req);
+  console.log("This is request body" + req.body);
   // const response = {
   //   original_url: req.body,
   //   short_url: req.body,
