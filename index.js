@@ -22,17 +22,17 @@ app.get("/api/hello", function (req, res) {
   res.json({ greeting: "hello API" });
 });
 
-app.post("/api/shorturl", function (req, res) {
+app.get("/api/shorturl", function (req, res) {
   const url = req.body;
   console.log(url);
-  // response = {
-  //   original_url :
-  //   short_url :
-  // }
-  // res.json(response);
+  response = {
+    original_url: url,
+    short_url: url,
+  };
+  res.json(response);
 });
 
-app.post("/api/shorturl/:shorturl", function (req, res) {});
+app.get("/api/shorturl/:shorturl", function (req, res) {});
 
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
