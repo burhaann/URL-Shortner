@@ -5,41 +5,40 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-// Basic Configuration
-const port = process.env.PORT || 3000;
-
-console.log("Hello111");
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    app.listen(process.env.PORT || 3000, function () {
-      console.log(`Listening on port ${port}`);
-    });
-    console.log("Connected to database ");
-  })
-  .catch((err) => {
-    console.error(`Error connecting to the database. \n${err}`);
+console.log("mongodb is starting");
+mongoose.connect(process.env.MONGO_URI).then(() => {
+  app.listen(process.env.PORT || 3000, function () {
+    console.log(Listening on port ${process.env.PORT});
   });
+});
+console.log("mongodb maybe started");
 
-console.log("Helwewewewewewewewewewewewewewewewewew");
-const db = mongoose.connection;
-
-db.on("connected", () => {
+mongoose.connection.on("connected", () => {
   console.log("Connected to MongoDB Atlas");
 });
 
-db.on("error", (err) => {
+mongoose.connection.on("error", (err) => {
   console.error("MongoDB connection error:", err);
 });
+
+const urlSchema = new mongoose.Schema({
+  original_url: String,
+  short_url: String,
+});
+
+const shortURL = mongoose.model("Short_URL", urlSchema);
 
 app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/public", express.static(`${process.cwd()}/public`));
+app.use("/public", express.static(${process.cwd()}/public));
 
 app.get("/", function (req, res) {
   res.sendFile(process.cwd() + "/views/index.html");
+  console.log(mongoose);
+  console.log(mongoose.Collection);
+  console.log(mongoose.Collection.length);
 });
 
 // Your first API endpoint
@@ -47,31 +46,21 @@ app.get("/api/hello", function (req, res) {
   res.json({ greeting: "hello API" });
 });
 
-const urlSchema = new mongoose.Schema({
-  original_url: String,
-  short_url: Number,
-});
-
-let Url = mongoose.model("Url", urlSchema);
-
 app.post("/api/shorturl", function (req, res) {
-  const mongoUrl = new Url({
-    original_url: req.body.url,
-    short_url: req.body,
-  });
-  mongoUrl.save();
-  console.log(req.body.url);
-  const response = {
-    original_url: req.body.url,
-    short_url: 1010,
-  };
-  res.json(response);
+  const url = new shortURL({ original_url: req.body.url, short_url: 1 });
+  url
+    .save()
+    .then((result) => {
+      // done(null, result);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+  res.json({ original_url: req.body.url, short_url: 1 });
 });
 
-app.get("/api/shorturl/:shorturl", function (req, res) {
-  const short_url = req.params.shorturl;
-});
-
-// app.listen(port, function () {
-//   console.log(`Listening on port ${port}`);
+// app.get("/api/shorturl/:url", function (req, res) {
+//   res.redirect()
+//   res.json({ original_url: req.body.url, short_url: 1 });
 // });
