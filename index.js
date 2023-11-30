@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 console.log("mongodb is starting");
 mongoose.connect(process.env.MONGO_URI).then(() => {
   app.listen(process.env.PORT || 3000, function () {
-    console.log(Listening on port ${process.env.PORT});
+    console.log(`Listening on port ${process.env.PORT}`);
   });
 });
 console.log("mongodb maybe started");
@@ -32,7 +32,7 @@ app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/public", express.static(${process.cwd()}/public));
+app.use("/public", express.static(`${process.cwd()}/public`));
 
 app.get("/", function (req, res) {
   res.sendFile(process.cwd() + "/views/index.html");
