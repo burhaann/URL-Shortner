@@ -56,8 +56,12 @@ let counter = 1;
 
 app.post("/api/shorturl", async function (req, res) {
   const url = req.body.url;
-  console.log("db connection");
-  console.log(db);
+  Url.countDocuments({}, (err, count) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(`Number of documents: ${count}`);
+    }
   try {
     const existingUrl = await Url.findOne({ original_url: url });
 
