@@ -55,7 +55,7 @@ app.post("/api/shorturl", function (req, res) {
   //   original_url: original_url,
   //   short_url: original_url,
   // };
-  res.json(response);
+  // res.json(response);
 });
 
 app.get("/api/shorturl/:shorturl", function (req, res) {
