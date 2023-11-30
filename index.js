@@ -32,6 +32,13 @@ app.get("/api/hello", function (req, res) {
   res.json({ greeting: "hello API" });
 });
 
+const urlSchema = new mongoose.Schema({
+  original_url: String,
+  short_url: Number,
+});
+
+let Url = mongoose.model("Url", urlSchema);
+
 app.post("/api/shorturl", function (req, res) {
   const url = req.body;
   console.log(url);
