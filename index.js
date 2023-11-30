@@ -58,7 +58,7 @@ app.post("/api/shorturl", function (req, res) {
     short_url: req.body,
   });
   mongoUrl.save();
-  console.log(isUri(req.body.url));
+  console.log(req.body.url);
   const response = {
     original_url: req.body.url,
     short_url: 1010,
