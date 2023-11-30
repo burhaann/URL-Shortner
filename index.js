@@ -54,7 +54,7 @@ app.post("/api/shorturl", function (req, res) {
     original_url: req.body,
     short_url: req.body,
   });
-  console.log(response);
+  console.log("This is request body" + req.body);
   // response = {
   //   original_url: original_url,
   //   short_url: original_url,
