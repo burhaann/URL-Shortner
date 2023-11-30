@@ -57,7 +57,7 @@ let Url = mongoose.model("Url", urlSchema);
 app.post("/api/shorturl", function (req, res) {
   const mongoUrl = new Url({
     original_url: req.body.url,
-    short_url: req.body,
+    short_url: 1010,
   });
   mongoUrl
     .save()
