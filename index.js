@@ -8,13 +8,19 @@ const mongoose = require("mongoose");
 // Basic Configuration
 const port = process.env.PORT || 3000;
 
-mongoose.connect(process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const db = mongoose.connection;
 
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
-db.once("open", () => {
+db.on("connected", () => {
   console.log("Connected to MongoDB Atlas");
+});
+
+db.on("error", (err) => {
+  console.error("MongoDB connection error:", err);
 });
 
 app.use(cors());
@@ -40,12 +46,15 @@ const urlSchema = new mongoose.Schema({
 let Url = mongoose.model("Url", urlSchema);
 
 app.post("/api/shorturl", function (req, res) {
-  const url = req.body;
-  console.log(url);
-  response = {
-    original_url: url,
-    short_url: url,
-  };
+  const original_url = new Url({
+    original_url: req.body,
+    short_url: req.body,
+  });
+  console.log(original_url);
+  // response = {
+  //   original_url: original_url,
+  //   short_url: original_url,
+  // };
   res.json(response);
 });
 
