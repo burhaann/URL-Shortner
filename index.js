@@ -99,8 +99,21 @@ app.post("/api/shorturl", async function (req, res) {
   // res.json(response);
 });
 
-app.get("/api/shorturl/:shorturl", function (req, res) {
+app.get("/api/shorturl/:shorturl", async function (req, res) {
   const short_url = req.params.shorturl;
+
+  try {
+    const url = await Url.findOne({ short_url: parseInt(short_url) });
+
+    if (url) {
+      res.redirect(url.original_url);
+    } else {
+      res.json({ error: "url not found" });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "server error" });
+  }
 });
 
 // app.listen(port, function () {
