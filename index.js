@@ -61,10 +61,6 @@ app.post("/api/shorturl", async function (req, res) {
     return res.json({ error: "invalid url" });
   }
 
-  const numberOfItems = await Url.countDocuments();
-  counter = numberOfItems;
-  console.log(counter + " " + numberOfItems);
-
   try {
     const existingUrl = await Url.findOne({ original_url: url });
 
@@ -85,6 +81,8 @@ app.post("/api/shorturl", async function (req, res) {
     console.error(err);
     res.status(500).json({ error: "server error" });
   }
+  const numberOfItems = await Url.countDocuments();
+  counter = numberOfItems;
   console.log(counter + " " + numberOfItems);
 
   // const mongoUrl = new Url({
