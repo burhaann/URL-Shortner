@@ -60,6 +60,8 @@ app.post("/api/shorturl", async function (req, res) {
   if (!validUrl.isWebUri(url)) {
     return res.json({ error: "invalid url" });
   }
+  const numberOfItems = await Url.countDocuments();
+  console.log(numberOfItems);
 
   try {
     const existingUrl = await Url.findOne({ original_url: url });
