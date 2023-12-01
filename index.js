@@ -53,6 +53,11 @@ const urlSchema = new mongoose.Schema({
 
 let Url = mongoose.model("Url", urlSchema);
 
+const countSchema = new mongoose.Schema({
+  counter: Number,
+});
+let Count = mongoose.model("Count", countSchema);
+
 let counter = 1;
 
 app.post("/api/shorturl", async function (req, res) {
@@ -74,6 +79,7 @@ app.post("/api/shorturl", async function (req, res) {
       });
     } else {
       const newUrl = new Url({ original_url: url, short_url: counter++ });
+      Count.updateOne({ counter: counter });
       await newUrl.save();
       res.json({
         original_url: newUrl.original_url,
