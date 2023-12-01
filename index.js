@@ -53,11 +53,6 @@ const urlSchema = new mongoose.Schema({
 
 let Url = mongoose.model("Url", urlSchema);
 
-const counterSchema = new mongoose.Schema({
-  count: Number,
-});
-let counterModel = mongoose.model("Counter", counterSchema);
-
 let counter = 1;
 
 app.post("/api/shorturl", async function (req, res) {
@@ -69,10 +64,6 @@ app.post("/api/shorturl", async function (req, res) {
   const numberOfItems = await Url.countDocuments();
   counter = numberOfItems;
   console.log(counter + " " + numberOfItems);
-
-  const countDocument = new counterModel({
-    count: counter,
-  });
 
   try {
     const existingUrl = await Url.findOne({ original_url: url });
@@ -97,13 +88,6 @@ app.post("/api/shorturl", async function (req, res) {
   }
 
   console.log(counter + " " + numberOfItems);
-  CountModel.updateOne({}, { $set: { count: counter } }, (err, result) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log("Count updated:", result);
-    }
-  });
 
   // const mongoUrl = new Url({
   //   original_url: url,
