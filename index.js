@@ -63,7 +63,7 @@ app.post("/api/shorturl", async function (req, res) {
 
   const numberOfItems = await Url.countDocuments();
   counter = numberOfItems;
-  console.log(counter + " " + numberOfItems);
+  // console.log(counter + " " + numberOfItems);
 
   try {
     const existingUrl = await Url.findOne({ original_url: url });
@@ -87,7 +87,7 @@ app.post("/api/shorturl", async function (req, res) {
     res.status(500).json({ error: "server error" });
   }
 
-  console.log(counter + " " + numberOfItems);
+  // console.log(counter + " " + numberOfItems);
 
   // const mongoUrl = new Url({
   //   original_url: url,
