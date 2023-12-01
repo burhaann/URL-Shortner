@@ -60,6 +60,7 @@ app.post("/api/shorturl", async function (req, res) {
   if (!validUrl.isWebUri(url)) {
     return res.json({ error: "invalid url" });
   }
+
   const numberOfItems = await Url.countDocuments();
   console.log(numberOfItems);
 
@@ -123,6 +124,6 @@ app.get("/api/shorturl/:shorturl", async function (req, res) {
   }
 });
 
-// app.listen(port, function () {
-//   console.log(`Listening on port ${port}`);
-// });
+app.listen(port, function () {
+  console.log(`Listening on port ${port}`);
+});
