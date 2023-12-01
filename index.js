@@ -62,7 +62,7 @@ app.post("/api/shorturl", async function (req, res) {
   }
 
   const numberOfItems = await Url.countDocuments();
-  console.log("hello" + numberOfItems);
+  counter = numberOfItems;
 
   try {
     const existingUrl = await Url.findOne({ original_url: url });
@@ -73,7 +73,7 @@ app.post("/api/shorturl", async function (req, res) {
         short_url: existingUrl.short_url,
       });
     } else {
-      const newUrl = new Url({ original_url: url, short_url: counter++ });
+      const newUrl = new Url({ original_url: url, short_url: counter + 2 });
       await newUrl.save();
       res.json({
         original_url: newUrl.original_url,
